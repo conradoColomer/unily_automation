@@ -25,10 +25,12 @@ class TestAddProductsInCart:
 
         home_page.navigate_to_products()
 
-        products_page.click_first_two_add_to_cart_buttons()
+        products_page.click_first_two_add_to_cart_buttons() #Pendiente de resolver probelmas con el Hover
 
         # Navegar al carrito y verificar que los productos están agregados
-       # home_page.navigate_to_cart()
+        home_page.navigate_to_cart()
+
+
        # assert cart_page.is_product_in_cart(1), "El primer producto no está en el carrito"
        # assert cart_page.is_product_in_cart(2), "El segundo producto no está en el carrito"
 
