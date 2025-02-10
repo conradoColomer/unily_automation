@@ -4,30 +4,34 @@ from page_views.home_page import HomePage
 from page_views.products_page import ProductsPage
 from page_views.cart_page import CartPage
 
+# Clase de prueba para agregar productos al carrito
 class TestAddProductsInCart:
-    @pytest.fixture(scope="class")
-    def setup_class(self):
-        self.driver = webdriver.Chrome()
-        self.driver.maximize_window()
-        self.driver.implicitly_wait(10)
-        yield
-        self.driver.quit()
+    driver = None
 
-    def test_add_products_in_cart(self, setup_class):
+    @classmethod
+    def setup_class(cls):
+        cls.driver = webdriver.Chrome()
+        cls.driver.maximize_window()
+        cls.driver.implicitly_wait(10)
+
+    def test_add_products_to_cart(self):
         self.driver.get("https://automationexercise.com")
         home_page = HomePage(self.driver)
         products_page = ProductsPage(self.driver)
         cart_page = CartPage(self.driver)
 
+        # Verificar que la página de inicio sea visible
+        assert home_page.is_home_page_visible(), "La página de inicio no es visible"
+
         home_page.navigate_to_products()
+        products_page.add_product_to_cart(1)  # Agregar primer producto
+        products_page.add_product_to_cart(2)  # Agregar segundo producto
 
-        # Add first product to cart
-        products_page.add_product_to_cart(1)
-        products_page.continue_shopping()
+        # Navegar al carrito y verificar que los productos están agregados
+        home_page.navigate_to_cart()
+        assert cart_page.is_product_in_cart(1), "El primer producto no está en el carrito"
+        assert cart_page.is_product_in_cart(2), "El segundo producto no está en el carrito"
 
-        # Add second product to cart
-        products_page.add_product_to_cart(2)
-        products_page.view_cart()
-
-        cart_products = cart_page.get_cart_products()
-        assert len(cart_products) == 2
+    @classmethod
+    def teardown_class(cls):
+        cls.driver.quit()
