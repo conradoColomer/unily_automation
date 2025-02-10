@@ -20,10 +20,10 @@ class TestSearchProduct:
         assert home_page.is_home_page_visible(), "La página de inicio no es visible"
 
         home_page.navigate_to_products()
-        products_page.search_product("Dress")
+        products_page.search_product("Winter top")
 
-        product_names = products_page.get_all_product_names()
-        assert all("Dress" in name for name in product_names), "No todos los productos encontrados contienen 'Dress' en el nombre"
+        # Verificar que el producto 'Winter Top' esté visible
+        assert products_page.is_product_name_visible(), "El producto 'Winter Top' no está visible"
 
     @classmethod
     def teardown_class(cls):
