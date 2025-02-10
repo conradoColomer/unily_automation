@@ -24,8 +24,11 @@ class TestVerifyProductQuantityInCart:
         assert home_page.is_home_page_visible(), "La página de inicio no es visible"
 
         home_page.navigate_to_products()
-        products_page.add_product_to_cart(1, quantity=4)  # Agregar 4 unidades del producto
+        home_page.view_product()
 
+        products_page.enter_quantity(4)  # Agregar 4 unidades del producto
+        products_page.add_product_to_cart()
+        home_page.naviga
         home_page.navigate_to_cart()
         assert cart_page.get_product_quantity(1) == 4, "La cantidad del producto en el carrito no es correcta"
 

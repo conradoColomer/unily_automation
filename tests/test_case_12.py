@@ -29,11 +29,7 @@ class TestAddProductsInCart:
 
         # Navegar al carrito y verificar que los productos están agregados
         home_page.navigate_to_cart()
-
-
-       # assert cart_page.is_product_in_cart(1), "El primer producto no está en el carrito"
-       # assert cart_page.is_product_in_cart(2), "El segundo producto no está en el carrito"
-
+    #Assertions con listas creadas de los productos seleccionados en los steps previos
     @classmethod
     def teardown_class(cls):
         cls.driver.quit()

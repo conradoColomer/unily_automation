@@ -9,6 +9,8 @@ class ProductsPage(BasePage):
     PRODUCT_NAME = (By.XPATH, "//div[@class='productinfo text-center']//p[text()='Winter Top']/ancestor::div[@class='productinfo text-center']")
     ADD_TO_CART_BUTTONS = (By.CLASS_NAME, "add-to-cart")
     CONTINUE_SHOPPING_BUTTON = (By.CSS_SELECTOR, "button.btn-success.close-modal")
+    QUANTITY_FIELD = (By.ID, "quantity")
+    ADD_TO_CART_BUTTON = (By.XPATH, "//button[@class='btn btn-default cart' and contains(text(), 'Add to cart')]")
 
     def search_product(self, product_name):
         self.enter_text(self.SEARCH_INPUT, product_name)
@@ -37,3 +39,10 @@ class ProductsPage(BasePage):
         # Espera a que el botón sea clickeable y hace clic en él
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(button))
         button.click()
+
+    def enter_quantity(self, quantity):
+        self.enter_text(self.QUANTITY_FIELD, quantity)
+
+    def add_product_to_cart(self):
+        self.wait_for_element(self.ADD_TO_CART_BUTTON).click()
+        self.click_continue_shopping_button()
