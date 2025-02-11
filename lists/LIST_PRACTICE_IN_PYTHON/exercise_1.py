@@ -30,6 +30,15 @@ rs_de_productos = [elemento.text for elemento in wait.until(EC.presence_of_all_e
 # Cierra el navegador al final
 driver.quit()
 
+#Imprimiendo una lista a la vez
+for prod in producto:
+    if "Blue" in prod:
+        print(f"----- {prod}")
+
+for rs in rs_de_productos:
+    if "500" in rs:
+        print(f"----- {rs}")
+
 
 #Combinando dos listas
 lista_de_productos = []
