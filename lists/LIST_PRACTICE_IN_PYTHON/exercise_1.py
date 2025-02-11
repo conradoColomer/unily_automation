@@ -27,6 +27,10 @@ RS_NAME =  (By.XPATH, "//div[contains(@class, 'productinfo text-center')]//h2")
 producto = [elemento.text for elemento in wait.until(EC.presence_of_all_elements_located(PRODUCT_NAME))]
 rs_de_productos = [elemento.text for elemento in wait.until(EC.presence_of_all_elements_located(RS_NAME))]
 
+# Cierra el navegador al final
+driver.quit()
+
+
 #Combinando dos listas
 lista_de_productos = []
 for producto, rs_de_productos in  zip(producto,rs_de_productos):
@@ -39,5 +43,3 @@ for item in lista_de_productos:
     else:
         continue
 
-# Cierra el navegador al final
-driver.quit()
