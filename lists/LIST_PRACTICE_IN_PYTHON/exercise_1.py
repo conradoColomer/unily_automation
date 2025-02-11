@@ -10,15 +10,34 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
 # Inicializa el driver y la clase
-driver = webdriver.Chrome()
+options = Options()
+options.add_argument("--headless")  # Ejecuta el navegador en segundo plano
+driver = webdriver.Chrome(options=options)
 driver.get("https://automationexercise.com")
+wait = WebDriverWait(driver,10)
 
-LIST_XPATH = (By.XPATH, "//div[contains(@class, 'productinfo text-center')]//p")
+#Localizadores
+PRODUCT_NAME = (By.XPATH, "//div[contains(@class, 'productinfo text-center')]//p")
+RS_NAME =  (By.XPATH, "//div[contains(@class, 'productinfo text-center')]//h2")
 
-productos =  WebDriverWait(driver,10).until(EC.presence_of_all_elements_located(LIST_XPATH))
+#Extraccion
+producto = [elemento.text for elemento in wait.until(EC.presence_of_all_elements_located(PRODUCT_NAME))]
+rs_de_productos = [elemento.text for elemento in wait.until(EC.presence_of_all_elements_located(RS_NAME))]
 
-print(f"La cantidad de elementos ubicados es de: {len(productos)}")
+#Combinando dos listas
+lista_de_productos = []
+for producto, rs_de_productos in  zip(producto,rs_de_productos):
+        lista_de_productos.append({"Producto" : producto, "RS" : rs_de_productos})
+
+#Iteramos la lista para obtener solo los productos con 'Dress'
+for item in lista_de_productos:
+    if " Dress" in item['Producto']:
+        print(f'Producto valido: {item['Producto']}')
+    else:
+        continue
+
 # Cierra el navegador al final
 driver.quit()
